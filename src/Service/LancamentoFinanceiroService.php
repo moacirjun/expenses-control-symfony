@@ -3,7 +3,9 @@
 namespace App\Service;
 
 
-use App\Entity\LancamentoFinanceiro;
+use App\Application\DTO\LancamentoFinanceiroAssembler;
+use App\Application\DTO\LancamentoFinanceiroDTO;
+use App\Application\Model\LancamentoFinanceiro;
 use App\Repository\LancamentoFinanceiroRepositoryInterface;
 use Doctrine\ORM\EntityNotFoundException;
 
@@ -18,13 +20,22 @@ final class LancamentoFinanceiroService
      */
     private $lancamentoFinanceiroRepository;
 
+
+    /**
+     * @var LancamentoFinanceiroAssembler
+     */
+    private $lancamentoFinanceiroAssembler;
+
     /**
      * LancamentoFinanceiroService constructor.
      * @param LancamentoFinanceiroRepositoryInterface $lancamentoFinanceiroRepository
      */
-    public function __construct(LancamentoFinanceiroRepositoryInterface $lancamentoFinanceiroRepository)
-    {
+    public function __construct(
+        LancamentoFinanceiroRepositoryInterface $lancamentoFinanceiroRepository,
+        LancamentoFinanceiroAssembler $lancamentoFinanceiroAssembler
+    ) {
         $this->lancamentoFinanceiroRepository = $lancamentoFinanceiroRepository;
+        $this->lancamentoFinanceiroAssembler = $lancamentoFinanceiroAssembler;
     }
 
     /**
@@ -58,14 +69,9 @@ final class LancamentoFinanceiroService
      * @return LancamentoFinanceiro|null
      * @throws \Exception
      */
-    public function addLancamentoFinanceiro($titulo, $descricao, $custo): ?LancamentoFinanceiro
+    public function addLancamentoFinanceiro(LancamentoFinanceiroDTO $DTO): ?LancamentoFinanceiro
     {
-        $lancamentoFinanceiro = new LancamentoFinanceiro();
-        $lancamentoFinanceiro->setTitulo($titulo);
-        $lancamentoFinanceiro->setDescricao($descricao);
-        $lancamentoFinanceiro->setCusto($custo);
-        $lancamentoFinanceiro->setIdCategoria(1);
-        $lancamentoFinanceiro->setCreatedAt(new \DateTime());
+        $lancamentoFinanceiro = $this->lancamentoFinanceiroAssembler->createLancamentoFinanceiro($DTO);
 
         $this->lancamentoFinanceiroRepository->save($lancamentoFinanceiro);
 
@@ -74,17 +80,15 @@ final class LancamentoFinanceiroService
 
     /**
      * @param int $lancamentoFinanceiroId
-     * @param $titulo
-     * @param $descricao
-     * @param $custo
+     * @param LancamentoFinanceiroDTO $DTO
+     *
      * @return LancamentoFinanceiro|null
+     *
      * @throws EntityNotFoundException
      */
     public function updateLancamentoFinanceiro(
         int $lancamentoFinanceiroId,
-        $titulo,
-        $descricao,
-        $custo
+        LancamentoFinanceiroDTO $DTO
     ): ?LancamentoFinanceiro {
 
         $lancamentoFinanceiro = $this->lancamentoFinanceiroRepository->find($lancamentoFinanceiroId);
@@ -93,11 +97,9 @@ final class LancamentoFinanceiroService
             throw new EntityNotFoundException($this->defaultNotFoundMessage($lancamentoFinanceiroId));
         }
 
-        $lancamentoFinanceiro->setTitulo($titulo);
-        $lancamentoFinanceiro->setDescricao($descricao);
-        $lancamentoFinanceiro->setCusto($custo);
-        $lancamentoFinanceiro->setIdCategoria(1);
-        $lancamentoFinanceiro->setCreatedAt(new \DateTime());
+        $lancamentoFinanceiro = $this
+            ->lancamentoFinanceiroAssembler
+            ->updateLancamentoFinanceiro($lancamentoFinanceiro, $DTO);
 
         $this->lancamentoFinanceiroRepository->save($lancamentoFinanceiro);
 

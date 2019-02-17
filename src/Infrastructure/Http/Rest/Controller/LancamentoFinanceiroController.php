@@ -2,11 +2,12 @@
 
 namespace App\Infrastructure\Http\Rest\Controller;
 
+use App\Application\DTO\LancamentoFinanceiroDTO;
 use App\Service\LancamentoFinanceiroService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use FOS\RestBundle\View\View;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class LancamentoFinanceiroController extends AbstractFOSRestController
@@ -24,16 +25,15 @@ class LancamentoFinanceiroController extends AbstractFOSRestController
     /**
      * @Rest\Post("/lancamento-financeiro")
      *
-     * @param Request $request
+     * @param LancamentoFinanceiroDTO $DTO
      * @return View
+     *
+     * @throws \Exception
+     * @ParamConverter("DTO", class="App\Application\DTO\LancamentoFinanceiroDTO", converter="fos_rest.request_body")
      */
-    public function postLancamento(Request $request)
+    public function postLancamento(LancamentoFinanceiroDTO $DTO)
     {
-        $lancamentoFinanceiro = $this->lancamentoFinanceiroService->addLancamentoFinanceiro(
-            $request->get('titulo'),
-            $request->get('descricao'),
-            $request->get('custo')
-        );
+        $lancamentoFinanceiro = $this->lancamentoFinanceiroService->addLancamentoFinanceiro($DTO);
 
         return View::create($lancamentoFinanceiro, Response::HTTP_CREATED);
     }
@@ -70,17 +70,17 @@ class LancamentoFinanceiroController extends AbstractFOSRestController
      * @Rest\Put("/lancamento-financeiro/{lancamentoFinanceiroId}")
      *
      * @param int $lancamentoFinanceiroId
-     * @param Request $request
+     * @param LancamentoFinanceiroDTO $DTO
+     * @ParamConverter("DTO", class="App\Application\DTO\LancamentoFinanceiroDTO", converter="fos_rest.request_body")
+     *
      * @return View
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
-    public function putLancamentoFinanceiro(int $lancamentoFinanceiroId, Request $request) : View
+    public function putLancamentoFinanceiro(int $lancamentoFinanceiroId, LancamentoFinanceiroDTO $DTO) : View
     {
         $lancamentoFinanceiro = $this->lancamentoFinanceiroService->updateLancamentoFinanceiro(
             $lancamentoFinanceiroId,
-            $request->get('titulo'),
-            $request->get('descricao'),
-            $request->get('custo')
+            $DTO
         );
 
         return View::create($lancamentoFinanceiro, Response::HTTP_OK);

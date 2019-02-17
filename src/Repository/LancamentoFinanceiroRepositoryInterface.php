@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 
-use App\Entity\LancamentoFinanceiro;
+use App\Application\Model\LancamentoFinanceiro;
 /**
  * Interface LancamentoFinanceiroRepositoryInterface
  * @package App\Repository
