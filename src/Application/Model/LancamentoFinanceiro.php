@@ -2,55 +2,62 @@
 
 namespace App\Application\Model;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
- * @ORM\Entity(repositoryClass="App\Repository\LancamentoFinanceiroRepository")
+ * Class LancamentoFinanceiro
+ * @package App\Application\Model
  */
 class LancamentoFinanceiro
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @var integer
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=120)
+     * @var string
      */
     private $titulo;
 
     /**
-     * @ORM\Column(type="string", length=120, nullable=true)
+     * @var string
      */
     private $descricao;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var integer
      */
     private $id_categoria;
 
     /**
-     * @ORM\Column(type="float")
+     * @var float
      */
     private $custo;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime
      */
     private $created_at;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTitulo(): ?string
     {
         return $this->titulo;
     }
 
+    /**
+     * @param string $titulo
+     * @return LancamentoFinanceiro
+     */
     public function setTitulo(string $titulo): self
     {
         if (strlen($titulo) < 5) {
@@ -62,11 +69,18 @@ class LancamentoFinanceiro
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getDescricao(): ?string
     {
         return $this->descricao;
     }
 
+    /**
+     * @param string|null $descricao
+     * @return LancamentoFinanceiro
+     */
     public function setDescricao(?string $descricao): self
     {
         if (strlen($descricao) < 5) {
@@ -78,11 +92,18 @@ class LancamentoFinanceiro
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getIdCategoria(): ?int
     {
         return $this->id_categoria;
     }
 
+    /**
+     * @param int $id_categoria
+     * @return LancamentoFinanceiro
+     */
     public function setIdCategoria(int $id_categoria): self
     {
         $this->id_categoria = $id_categoria;
@@ -90,11 +111,18 @@ class LancamentoFinanceiro
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getCusto(): ?float
     {
         return $this->custo;
     }
 
+    /**
+     * @param float $custo
+     * @return LancamentoFinanceiro
+     */
     public function setCusto(float $custo): self
     {
         if (!is_numeric($custo)) {
@@ -106,11 +134,18 @@ class LancamentoFinanceiro
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
     }
 
+    /**
+     * @param \DateTimeInterface $created_at
+     * @return LancamentoFinanceiro
+     */
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
