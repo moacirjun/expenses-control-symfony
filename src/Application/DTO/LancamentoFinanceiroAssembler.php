@@ -16,9 +16,9 @@ class LancamentoFinanceiroAssembler
             $lancamentoFinanceiro = new LancamentoFinanceiro();
         }
 
-        $lancamentoFinanceiro->setTitulo($DTO->getTitulo());
-        $lancamentoFinanceiro->setDescricao($DTO->getDescricao());
-        $lancamentoFinanceiro->setCusto($DTO->getCusto());
+        $lancamentoFinanceiro->setTitulo($DTO->getTitle());
+        $lancamentoFinanceiro->setDescricao($DTO->getDescription());
+        $lancamentoFinanceiro->setCusto($DTO->getValue());
         $lancamentoFinanceiro->setIdCategoria(1);
         $lancamentoFinanceiro->setCreatedAt(new \DateTime);
 

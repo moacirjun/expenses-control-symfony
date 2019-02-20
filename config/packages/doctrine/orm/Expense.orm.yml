@@ -1,0 +1,29 @@
+App\Application\Model\Expense:
+    type: entity
+    table: tb_expenses
+    repositoryClass: App\Repository\ExpenseRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: SEQUENCE
+            sequenceGenerator:
+                sequenceName: expense_id_seq
+                allocationSize: 1
+                initialValue: 1
+    fields:
+        title:
+            type: string
+            length: 120
+        description:
+            type: string
+            nullable: true
+            length: 120
+        value:
+            type: decimal
+            precision: 11
+            scale: 2
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime
