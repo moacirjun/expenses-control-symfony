@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /** 
  * @ORM\Entity
@@ -33,10 +33,17 @@ class Expense
     private $description;
 
     /**
-     * @var double
+     * @var float
      * @ORM\Column(type="decimal", precision=11, scale=2)
      */
     private $value;
+
+    /**
+     * Category
+     * @var Category
+     * @ManytoOne(targetEntity="Category")
+     */
+    private $category;
 
     /**
      * @var \DateTime
@@ -150,6 +157,28 @@ class Expense
     {
         $this->updatedAt = $updatedAt;
 
+        return $this;
+    }
+
+    /**
+     * get Expense's category
+     *
+     * @return Category|null
+     */
+    public function getCategory() : ?Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * set Expense's category
+     *
+     * @param Category $category
+     * @return self
+     */
+    public function setCategory(Category $category) : self
+    {
+        $this->category = $category;
         return $this;
     }
 }

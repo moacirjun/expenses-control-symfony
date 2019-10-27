@@ -27,7 +27,7 @@ class Category
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $description;
 
@@ -39,7 +39,7 @@ class Category
 
     /**
      * @var \DateTimeInterface
-     * @ORM\Column(type="datetime", name="updated_at", nullable=true)
+     * @ORM\Column(type="datetime", name="updated_at")
      */
     private $updatedAt;
 
