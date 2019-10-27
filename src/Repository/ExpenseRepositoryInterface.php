@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Application\Model\Expense;
+use App\Entity\Expense;
 
 /**
  * @method Expense|null find($id, $lockMode = null, $lockVersion = null)

@@ -1,37 +1,52 @@
 <?php
 
-namespace App\Application\Model;
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
 
 
+/** 
+ * @ORM\Entity
+ * @ORM\Table(name="tb_expenses")
+ */
 class Expense
 {
     /**
      * @var integer
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="expense_id_seq", initialValue=1, allocationSize=1)
      */
     private $id;
 
     /**
      * @var string
+     * @ORM\Column(length=120)
      */
     private $title;
 
     /**
      * @var string
+     * @ORM\Column(length=120, nullable=TRUE)
      */
     private $description;
 
     /**
      * @var double
+     * @ORM\Column(type="decimal", precision=11, scale=2)
      */
     private $value;
 
     /**
      * @var \DateTime
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
      * @var \DateTime
+     * @ORM\Column(type="datetime")
      */
     private $updatedAt;
 

@@ -5,7 +5,7 @@ namespace App\Service;
 
 use App\Application\DTO\ExpenseAssembler;
 use App\Application\DTO\ExpenseDTO;
-use App\Application\Model\Expense;
+use App\Entity\Expense;
 use App\Repository\ExpenseRepositoryInterface;
 use Doctrine\ORM\EntityNotFoundException;
 

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Application\Model\Expense;
+use App\Entity\Expense;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 

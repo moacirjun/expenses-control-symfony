@@ -2,8 +2,7 @@
 
 namespace App\Application\DTO;
 
-
-use App\Application\Model\Expense;
+use App\Entity\Expense;
 
 class ExpenseAssembler
 {
