@@ -7,7 +7,14 @@ use App\Application\Model\Expense;
 
 class ExpenseAssembler
 {
-    public function readDTO(ExpenseDTO $expenseDTO, ?Expense $expense = null)
+    /**
+     * readDTO
+     *
+     * @param ExpenseDTO $expenseDTO
+     * @param Expense|null $expense
+     * @return Expense
+     */
+    public function readDTO(ExpenseDTO $expenseDTO, ?Expense $expense = null) : Expense
     {
         if (!$expense) {
             $expense = new Expense();
@@ -22,7 +29,13 @@ class ExpenseAssembler
         return $expense;
     }
 
-    public function writeDTO(Expense $expense)
+    /**
+     * Crete a expenseDTO instance from a passed Expense instance
+     *
+     * @param Expense $expense
+     * @return expenseDTO
+     */
+    public function writeDTO(Expense $expense) : expenseDTO
     {
         return new ExpenseDTO(
             $expense->getTitle(),
@@ -33,12 +46,25 @@ class ExpenseAssembler
         );
     }
 
-    public function createExpense(ExpenseDTO $expenseDTO)
+    /**
+     * Crete a Expense instance from a passed expenseDTO instance
+     *
+     * @param ExpenseDTO $expenseDTO
+     * @return Expense
+     */
+    public function createExpense(ExpenseDTO $expenseDTO)  : Expense
     {
         return $this->readDTO($expenseDTO);
     }
 
-    public function updateExpense(Expense $expense, ExpenseDTO $expenseDTO)
+    /**
+     * ReadDTO and set Expense object with readed data
+     *
+     * @param Expense $expense
+     * @param ExpenseDTO $expenseDTO
+     * @return Expense
+     */
+    public function updateExpense(Expense $expense, ExpenseDTO $expenseDTO) : Expense
     {
         return $this->readDTO($expenseDTO, $expense);
     }
