@@ -2,13 +2,13 @@
 
 namespace App\Infrastructure\Http\Rest\Controller;
 
-
 use App\Application\DTO\ExpenseDTO;
 use App\Service\ExpenseService;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Doctrine\ORM\EntityNotFoundException;
 
 /**
  * Class ExpenseController
@@ -50,7 +50,7 @@ class ExpenseController
      *
      * @param int $expenseId
      * @return View
-     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws EntityNotFoundException
      */
     public function getOneExpense(int $expenseId): View
     {
@@ -80,7 +80,7 @@ class ExpenseController
      *
      * @ParamConverter("expenseDTO", class="App\Application\DTO\ExpenseDTO", converter="fos_rest.request_body")
      *
-     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws EntityNotFoundException
      */
     public function putExpense(int $expenseId, ExpenseDTO $expenseDTO): View
     {
@@ -94,7 +94,7 @@ class ExpenseController
      *
      * @param int $expenseId
      * @return View
-     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws EntityNotFoundException
      */
     public function deleteExpense(int $expenseId): View
     {
