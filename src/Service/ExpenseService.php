@@ -55,9 +55,14 @@ final class ExpenseService
     /**
      * @return array|null
      */
-    public function getAllExpense(): ?array
+    public function getAllExpense(array $params)
     {
-        return $this->expenseRepository->findAll();
+        $startDate = isset($params['start_date']) ? new \DateTime($params['start_date']) : null;
+        $endDate = isset($params['end_date']) ? new \DateTime($params['end_date']) : null;
+        $offset = isset($params['offset']) && is_numeric($params['offset']) ? $params['offset'] : 0;
+        $limit = isset($params['limit']) && is_numeric($params['limit']) ? $params['limit'] : 15;
+
+        return $this->expenseRepository->getRecents($startDate, $endDate, $offset, $limit);
     }
 
     /**

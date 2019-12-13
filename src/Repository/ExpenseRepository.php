@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Expense;
+use DateInterval;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @method Expense|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +20,40 @@ class ExpenseRepository extends ServiceEntityRepository implements ExpenseReposi
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Expense::class);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param \DateTime $startDate
+     * @param \DateTime $endDate
+     * @param integer $offset
+     * @param integer $limit
+     * @return Paginator
+     */
+    public function getRecents(\DateTime $startDate = null, \DateTime $endDate = null, $offset = 0, $limit = 15)
+    {
+        $formattedStartDate = $startDate instanceof \DateTime
+            ? $startDate
+            : (new DateTime())->sub(new DateInterval('P15D'));
+
+        $formattedStartDate->setTime(23, 59, 59, 99);
+
+        $query = $this->createQueryBuilder('expense')
+            ->where('expense.createdAt >= :start')
+            ->setParameter('start', $formattedStartDate)
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
+        
+        if ($endDate instanceof \DateTime) {
+            $endDate->setTime(23, 59, 59, 99);
+
+            $query
+                ->andWhere('expense.createdAt <= :end')
+                ->setParameter('end', $endDate);
+        }
+
+        return new Paginator($query, false);
     }
 
     /**

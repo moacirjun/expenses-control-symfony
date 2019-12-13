@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\ORM\EntityNotFoundException;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ExpenseController
@@ -64,10 +65,9 @@ class ExpenseController
      *
      * @return View
      */
-    public function getAllExpense(): View
+    public function getAllExpense(Request $request): View
     {
-        $expenses = $this->expenseService->getAllExpense();
-
+        $expenses = $this->expenseService->getAllExpense($request->query->all());
         return View::create($expenses, Response::HTTP_OK);
     }
 
