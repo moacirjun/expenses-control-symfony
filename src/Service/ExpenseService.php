@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-
 use App\Application\DTO\ExpenseAssembler;
 use App\Application\DTO\ExpenseDTO;
 use App\Entity\Expense;
@@ -59,10 +58,10 @@ final class ExpenseService
     {
         $startDate = isset($params['start_date']) ? new \DateTime($params['start_date']) : null;
         $endDate = isset($params['end_date']) ? new \DateTime($params['end_date']) : null;
-        $offset = isset($params['offset']) && is_numeric($params['offset']) ? $params['offset'] : 0;
+        $page = isset($params['page']) && is_numeric($params['page']) ? $params['page'] : 1;
         $limit = isset($params['limit']) && is_numeric($params['limit']) ? $params['limit'] : 15;
 
-        return $this->expenseRepository->getRecents($startDate, $endDate, $offset, $limit);
+        return $this->expenseRepository->getRecents($startDate, $endDate, $page, $limit);
     }
 
     /**
