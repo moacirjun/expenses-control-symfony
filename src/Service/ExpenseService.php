@@ -6,6 +6,7 @@ use App\Application\DTO\ExpenseAssembler;
 use App\Application\DTO\ExpenseDTO;
 use App\Entity\Expense;
 use App\Repository\ExpenseRepositoryInterface;
+use App\Service\Helpers\DateFactory;
 use Doctrine\ORM\EntityNotFoundException;
 
 /**
@@ -56,8 +57,8 @@ final class ExpenseService
      */
     public function getAllExpense(array $params)
     {
-        $startDate = isset($params['start_date']) ? new \DateTime($params['start_date']) : null;
-        $endDate = isset($params['end_date']) ? new \DateTime($params['end_date']) : null;
+        $startDate = isset($params['start_date']) ? DateFactory::create($params['start_date']) : null;
+        $endDate = isset($params['end_date']) ? DateFactory::create($params['end_date']) : null;
         $page = isset($params['page']) && is_numeric($params['page']) ? $params['page'] : 1;
         $limit = isset($params['limit']) && is_numeric($params['limit']) ? $params['limit'] : 15;
 

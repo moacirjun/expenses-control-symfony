@@ -12,8 +12,10 @@ fos_rest:
         codes:
             Doctrine\ORM\EntityNotFoundException: 404
             \LogicException: 400
+            \InvalidArgumentException: 400
             \DomainException: 400
         messages:
             Doctrine\ORM\EntityNotFoundException: true
             \LogicException: true
+            \InvalidArgumentException: true
             \DomainException: true
